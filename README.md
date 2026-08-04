@@ -1,10 +1,5 @@
 # Network-Service-Scanning-Investigation-T1046-
 This project demonstrates the development and validation of a custom Wazuh detection rule for identifying network service scanning activity.
-# Wazuh Detection Engineering: Network Service Scanning (MITRE T1046)
-
-## Overview
-
-This project demonstrates the development and validation of a custom Wazuh detection rule for identifying network service scanning activity.
 
 A Kali Linux VM was used to simulate adversary reconnaissance against an Ubuntu endpoint using Nmap. Default Wazuh detection coverage was analyzed, a visibility gap was identified, and custom detection logic was developed using Ubuntu UFW firewall telemetry.
 
