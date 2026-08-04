@@ -1,0 +1,13 @@
+<group name="local,network_scanning,">
+
+  <rule id="100100" level="10">
+    <match>UFW BLOCK</match>
+    <description>
+      Possible Network Service Scanning Detected - Multiple UFW blocked connection attempts
+    </description>
+    <mitre>
+      <id>T1046</id>
+    </mitre>
+  </rule>
+
+</group>
