@@ -177,19 +177,6 @@ The rule monitors firewall-denied traffic collected from the Ubuntu endpoint.
 
 When UFW generates blocked TCP connection events, Wazuh evaluates the event and generates a security alert mapped to MITRE ATT&CK T1046.
 
-Detection flow:
-
-Kali Linux
-↓
-Nmap SYN Scan
-↓
-Ubuntu UFW BLOCK Event
-↓
-Wazuh Agent Collection
-↓
-Custom Rule 100100
-↓
-Security Alert Generated
 ---
 
 # Rule Validation
