@@ -1,20 +1,40 @@
-# Network-Service-Scanning-Investigation-T1046-
-This project demonstrates the development and validation of a custom Wazuh detection rule for identifying network service scanning activity.
+# Wazuh Detection Engineering: Network Service Scanning (MITRE T1046)
 
-A Kali Linux VM was used to simulate adversary reconnaissance against an Ubuntu endpoint using Nmap. Default Wazuh detection coverage was analyzed, a visibility gap was identified, and custom detection logic was developed using Ubuntu UFW firewall telemetry.
+## Overview
 
-The objective was to improve visibility into MITRE ATT&CK **T1046 — Network Service Scanning**.
+This project demonstrates the design, implementation, and validation of a custom Wazuh detection rule for identifying adversary reconnaissance activity.
+
+A Kali Linux VM was used to simulate attacker behavior by performing Nmap network service scans against an Ubuntu 22.04 endpoint monitored by Wazuh.
+
+The investigation followed a detection engineering workflow:
+
+1. Simulate adversary activity using MITRE ATT&CK techniques
+2. Analyze available telemetry sources
+3. Identify gaps in default SIEM detection coverage
+4. Develop custom detection logic
+5. Validate detection using Wazuh tooling
+6. Investigate generated alerts as a SOC analyst
+
+The final detection uses Ubuntu UFW firewall telemetry to identify blocked TCP connection attempts associated with network service scanning.
 
 ---
 
 # Environment
+## MITRE ATT&CK Mapping
 
-| Component | Role |
+| Technique | ID | Tactic |
+|---|---|---|
+| Network Service Scanning | T1046 | Discovery |
+
+## Tools Used
+
+| Tool | Purpose |
 |---|---|
-| Kali Linux | Adversary simulation node |
-| Ubuntu 22.04 | Target endpoint with Wazuh agent |
-| Wazuh OVA | SIEM for log collection and detection |
-
+| Kali Linux | Adversary simulation |
+| Nmap | Network reconnaissance |
+| Ubuntu UFW | Firewall telemetry source |
+| Wazuh SIEM | Detection and investigation |
+| Wazuh Logtest | Rule validation |
 ---
 
 # Phase 1 — Adversary Simulation
@@ -65,6 +85,18 @@ No alerts were generated for the reconnaissance activity.
 Default Wazuh telemetry captured normal authentication activity but failed to identify the scanning behavior.
 
 ![Default Wazuh Results](screenshots/wazuh_default_detection_gap.png)
+
+## Why Default Detection Failed
+
+The default Wazuh ruleset successfully collected endpoint telemetry; however, network reconnaissance activity was not directly represented as a security alert.
+
+The endpoint generated firewall events, but no correlation logic existed to identify repeated blocked TCP connection attempts from a single source.
+
+This represents a common SIEM detection engineering challenge:
+
+Telemetry collection ≠ Detection capability
+
+Additional detection logic was required to transform raw firewall events into actionable security alerts.
 
 ---
 
@@ -139,7 +171,25 @@ The complete rule file is available:
 ```
 rules/local_rules.xml
 ```
+## Detection Logic Explanation
 
+The rule monitors firewall-denied traffic collected from the Ubuntu endpoint.
+
+When UFW generates blocked TCP connection events, Wazuh evaluates the event and generates a security alert mapped to MITRE ATT&CK T1046.
+
+Detection flow:
+
+Kali Linux
+↓
+Nmap SYN Scan
+↓
+Ubuntu UFW BLOCK Event
+↓
+Wazuh Agent Collection
+↓
+Custom Rule 100100
+↓
+Security Alert Generated
 ---
 
 # Rule Validation
@@ -179,6 +229,18 @@ The validation confirmed that the custom detection closed the visibility gap ide
 ---
 
 # Phase 5 — Analyst Investigation
+
+## Alert Evidence
+
+Example alert fields:
+
+
+Rule ID: 100100
+Level: 10
+MITRE Technique: T1046
+Agent: ubuntu-victim
+Source IP: 192.168.56.102
+Destination IP: 192.168.56.106
 
 ## Alert Summary
 
