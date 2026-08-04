@@ -196,7 +196,9 @@ MITRE: T1046
 ```
 
 ![Wazuh Logtest Validation](screenshots/wazuh_logtest.png)
+The custom detection rule was validated using Wazuh's built-in log testing utility. A captured Ubuntu UFW firewall event was submitted to the analyzer, which successfully matched rule ID 100100 and generated a Level 10 alert mapped to MITRE ATT&CK T1046.
 
+This confirmed that the detection logic correctly converted raw firewall telemetry into an actionable security alert before deploying it in the live Wazuh environment.
 ---
 
 # Phase 4 - Operational Validation
