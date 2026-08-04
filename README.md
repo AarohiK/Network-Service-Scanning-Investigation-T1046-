@@ -37,11 +37,11 @@ The final detection uses Ubuntu UFW firewall telemetry to identify blocked TCP c
 | Wazuh Logtest | Rule validation |
 ---
 
-# Phase 1 — Adversary Simulation
+# Phase 1 - Adversary Simulation
 
 ## Technique
 
-**MITRE ATT&CK: T1046 — Network Service Scanning**
+**MITRE ATT&CK: T1046 - Network Service Scanning**
 
 ## Attack Simulation
 
@@ -63,7 +63,7 @@ The scan successfully identified exposed services on the Ubuntu endpoint.
 
 ---
 
-# Phase 2 — Default Wazuh Detection Analysis
+# Phase 2 - Default Wazuh Detection Analysis
 
 ## Objective
 
@@ -121,7 +121,7 @@ A detection capability was required to identify:
 
 ---
 
-# Phase 3 — Detection Engineering
+# Phase 3 - Detection Engineering
 
 ## Telemetry Source
 
@@ -212,7 +212,7 @@ MITRE: T1046
 
 ---
 
-# Phase 4 — Operational Validation
+# Phase 4 - Operational Validation
 
 The Nmap scan was executed again:
 
@@ -228,7 +228,7 @@ The validation confirmed that the custom detection closed the visibility gap ide
 
 ---
 
-# Phase 5 — Analyst Investigation
+# Phase 5 - Analyst Investigation
 
 ## Alert Evidence
 
@@ -274,7 +274,7 @@ The source IP was confirmed as the authorized Kali Linux testing VM.
 Classification:
 
 ```
-True Positive — Authorized Activity
+True Positive - Authorized Activity
 ```
 
 The detection correctly identified behavior matching MITRE ATT&CK T1046. The activity was expected because it was generated during an authorized security testing exercise.
